@@ -8,17 +8,29 @@
   --border-color: #e9ecef;
   --button-bg: #007bff;
   --button-text: #ffffff;
+
+  --panel-bg: #ffffff;
+  --panel-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --square-bg: #ffffff;
+  --square-border: #dfe4ea;
+  --square-highlight: #ffeaa7;
 }
 
 [data-theme="dark"] {
   /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
+  --bg-primary: #111213;
+  --bg-secondary: #181b1f;
+  --text-primary: #f2f5f8;
+  --text-secondary: #7cc4ff;
+  --border-color: #2a2f36;
+  --button-bg: #0a84ff;
   --button-text: #ffffff;
+
+  --panel-bg: #1d2126;
+  --panel-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  --square-bg: #22262c;
+  --square-border: #2f353d;
+  --square-highlight: #3d3a19;
 }
 
 .App {
@@ -29,17 +41,6 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: var(--bg-secondary);
   min-height: 100vh;
@@ -47,15 +48,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 16px;
   color: var(--text-primary);
   transition: background-color 0.3s ease;
   position: relative;
-}
-
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+  padding: 24px 16px;
 }
 
 .theme-toggle {
@@ -70,35 +67,131 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  transform: translateY(-1px);
+  opacity: 0.95;
 }
 
 .theme-toggle:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Container */
+.ttt-container {
+  background: var(--panel-bg);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: var(--panel-shadow);
+  width: 100%;
+  max-width: 420px;
+}
+
+.ttt-title {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  letter-spacing: 0.3px;
+}
+
+.ttt-status {
+  margin: 0 0 16px;
+  color: var(--text-primary);
+  opacity: 0.9;
+}
+.ttt-status.done {
+  font-weight: 700;
+}
+
+/* Board */
+.ttt-board {
+  display: grid;
+  gap: 10px;
+}
+
+.ttt-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.ttt-square {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--square-bg);
+  border: 2px solid var(--square-border);
+  border-radius: 12px;
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: transform 0.06s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.04);
+}
+.ttt-square:hover {
+  transform: translateY(-1px);
+  border-color: var(--text-secondary);
+}
+.ttt-square:active {
+  transform: translateY(0);
+}
+.ttt-square.highlight {
+  animation: pulse 1.2s infinite ease-in-out;
+  background: var(--square-highlight);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 234, 167, 0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(255, 234, 167, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 234, 167, 0); }
+}
+
+/* Actions */
+.ttt-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+.ttt-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: linear-gradient(180deg, var(--button-bg), #0056b3);
+  color: var(--button-text);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.08s ease, opacity 0.2s ease;
+}
+.ttt-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+.ttt-btn:active {
+  transform: translateY(0);
+}
+
+/* Footer */
+.ttt-footer {
+  margin-top: 8px;
+  color: var(--text-primary);
+  opacity: 0.6;
+  font-size: 12px;
 }
 
 /* Responsive design for mobile */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .theme-toggle {
     top: 10px;
     right: 10px;
-    padding: 8px 16px;
+    padding: 8px 12px;
     font-size: 12px;
+  }
+  .ttt-title {
+    font-size: 24px;
+  }
+  .ttt-square {
+    font-size: 34px;
   }
 }
